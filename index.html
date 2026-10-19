@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10152d">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="icons/icon-192.png">
+<title>Mystery Mind Hindi</title>
+<style>
+:root{--bg:#0c1023;--panel:#171d3b;--panel2:#20284b;--gold:#ffd166;--cyan:#62e6df;--text:#f6f7ff;--muted:#aeb6d7;--pink:#ff78ae}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#252b5b 0,#0c1023 58%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}button,select{font:inherit}button{cursor:pointer;border:0;border-radius:14px;padding:12px 16px;font-weight:800;color:#10152d;background:linear-gradient(135deg,var(--gold),#ffad5c);box-shadow:0 5px 0 #b66e37}button:active{transform:translateY(2px);box-shadow:0 3px 0 #b66e37}.secondary{background:#303960;color:var(--text);box-shadow:0 4px 0 #1b2240}.ghost{background:transparent;color:var(--muted);box-shadow:none;border:1px solid #3b456f}.wrap{max-width:760px;margin:auto;padding:18px 16px 36px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.brand{font-size:1.1rem;font-weight:950;letter-spacing:.2px}.brand span{color:var(--gold)}.coins{background:#292f50;border:1px solid #4d5680;border-radius:999px;padding:8px 12px;font-weight:900;color:var(--gold);white-space:nowrap}.card{background:linear-gradient(150deg,rgba(32,40,75,.96),rgba(20,26,53,.96));border:1px solid #343e6c;border-radius:24px;padding:20px;box-shadow:0 14px 34px #05071680;margin-bottom:16px}.hero{text-align:center;padding:24px 18px}.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:2px;color:var(--cyan);font-weight:900}.hero h1{font-size:clamp(2rem,8vw,3.5rem);line-height:1.02;margin:10px 0}.hero p{color:var(--muted);line-height:1.5}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;font-weight:900}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mode{padding:16px;border-radius:18px;background:#252d53;border:1px solid #424d7b;min-height:124px;text-align:left;color:var(--text);box-shadow:none}.mode .emoji{font-size:1.8rem;display:block;margin-bottom:8px}.mode small{display:block;color:var(--muted);font-weight:500;margin-top:4px}.ad-slot{border:1px dashed #58618b;border-radius:14px;padding:14px;text-align:center;color:#9099bf;font-size:.8rem;margin:16px 0;background:#0b1026}.ad-slot strong{display:block;color:#c4cbed;margin-bottom:3px}.hidden{display:none!important}.screen-title{display:flex;align-items:center;gap:10px;margin-bottom:12px}.screen-title h2{margin:0;font-size:1.35rem}.back{padding:9px 12px}.stats{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.pill{background:#2b345e;border:1px solid #424e7c;border-radius:999px;padding:7px 11px;color:#e9ecff;font-size:.85rem}.object-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.obj{aspect-ratio:1;border-radius:18px;background:linear-gradient(145deg,#394777,#20284a);border:1px solid #59669a;display:grid;place-items:center;font-size:2rem;box-shadow:none;color:white;padding:4px}.obj.found{background:#174d51;border-color:var(--cyan);opacity:.72}.obj.wrong{animation:shake .18s linear 2}@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}.notice{color:var(--muted);line-height:1.5}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #4a5686;background:#0d1330;color:white;margin:6px 0 12px}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#f7f7ff;color:#11152b;padding:12px 18px;border-radius:999px;font-weight:800;box-shadow:0 8px 28px #0008;z-index:5;max-width:90vw;text-align:center}.footer{text-align:center;color:#737da8;font-size:.76rem;padding:8px}.badge{display:inline-block;background:#3a2d4e;color:#ffb8d5;border-radius:999px;padding:5px 9px;font-size:.75rem;font-weight:800}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding:36px}}
+
+#levelRewardOverlay{position:fixed;inset:0;background:rgba(5,8,22,.76);z-index:99999;display:none;align-items:flex-end;justify-content:center;padding:14px;backdrop-filter:blur(5px)}
+#levelRewardOverlay.show{display:flex}
+#levelRewardSheet{width:min(100%,520px);border:1px solid rgba(255,209,102,.45);border-radius:24px 24px 18px 18px;background:linear-gradient(160deg,#20284b,#11162c 70%);color:#fff;padding:22px 18px 18px;box-shadow:0 -14px 55px #0008;transform:translateY(110%);opacity:.6;transition:transform .42s cubic-bezier(.2,.85,.25,1),opacity .3s ease}
+#levelRewardOverlay.show #levelRewardSheet{transform:translateY(0);opacity:1}
+#levelRewardSheet .rk{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#ffd166;font-weight:800;text-align:center}
+#levelRewardSheet .rt{font-size:27px;font-weight:900;text-align:center;margin:8px 0}
+#levelRewardSheet .rs{font-size:14px;text-align:center;color:#d8defa;margin:0 0 14px}
+#levelRewardSheet .rc{display:flex;align-items:center;justify-content:center;gap:10px;font-size:31px;font-weight:900;color:#ffd166;margin:12px 0 18px}
+#levelRewardSheet .ra{display:grid;grid-template-columns:1fr;gap:10px}
+#levelRewardSheet button{width:100%;border:0;border-radius:14px;padding:14px 12px;font-size:16px;font-weight:800;cursor:pointer}
+#rewardContinue{background:#ffd166;color:#171a2b}
+#rewardHome{background:#30395f;color:#fff;border:1px solid #515c88}
+#levelRewardSheet .rl{display:flex;align-items:center;justify-content:center;gap:18px;margin:14px 0;padding:12px;border-radius:14px;background:#ffffff0f}
+#levelRewardSheet .rl strong{font-size:21px}
+#levelRewardSheet .rl span{font-size:12px;color:#c7ccef}
+@media(min-width:600px){#levelRewardOverlay{align-items:center}#levelRewardSheet{border-radius:24px}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="brand">🧠 MYSTERY <span>MIND</span> HINDI</div><div class="coins">🪙 <span id="coinCount">50</span></div></header>
+
+<section id="home">
+  <div class="card hero">
+    <div class="eyebrow">Think • Observe • Solve</div>
+    <h1>Ready to crack<br><span style="color:var(--gold)">the mystery?</span></h1>
+    <p>Chhote clues, bade mysteries! Apni observation aur logic ko test karo.</p>
+    <div class="actions"><button id="guestBtn">🎮 Play as Guest</button><button class="secondary" id="languageBtn">🌐 Language: English</button></div>
+    <p style="font-size:.78rem;margin-bottom:0">Guest progress is saved on this device. Login is not required.</p>
+  </div>
+  <div class="ad-slot" aria-label="Advertisement placeholder"><strong>Advertisement space</strong>Live ads will appear here after approved ad-network setup.</div>
+  <div class="card">
+    <div class="section-title"><span>🕹️ Choose a Mystery</span><span class="badge">LEVEL 1</span></div>
+    <div class="grid">
+      <button class="mode" data-mode="hidden"><span class="emoji">🔎</span><b>Hidden Objects</b><small>Find the 3 secret items</small></button>
+      <button class="mode" data-mode="pattern"><span class="emoji">🧩</span><b>Pattern Match</b><small>Pick what comes next</small></button>
+      <button class="mode" data-mode="math"><span class="emoji">➗</span><b>Math Mystery</b><small>Solve the number clue</small></button>
+      <button class="mode" data-mode="case"><span class="emoji">🕵️</span><b>Mini Case</b><small>Read clues and decide</small></button>
+      <button class="mode" data-mode="memory"><span class="emoji">🧠</span><b>Memory Test</b><small>Choose the matching symbol</small></button>
+      <button class="mode" data-mode="daily"><span class="emoji">🎁</span><b>Daily Reward</b><small>Claim coins once per day</small></button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">📊 Your Progress</div>
+    <div class="stats"><span class="pill">Solved: <b id="solvedCount">0</b></span><span class="pill">Level: <b id="levelCount">1</b></span><span class="pill">♾️ Endless mode</span><span class="pill">Player: <b id="playerName">Guest Detective</b></span></div>
+    <button class="ghost" id="nameBtn">Edit nickname</button> <button class="ghost" id="resetBtn">Reset local progress</button>
+  </div>
+</section>
+
+<section id="game" class="hidden">
+  <div class="screen-title"><button class="secondary back" id="backBtn">← Back</button><h2 id="gameTitle">Mystery</h2></div>
+  <div class="card">
+    <div class="stats"><span class="pill">🪙 <span id="gameCoins">50</span> coins</span><span class="pill">⭐ Level <span id="gameLevel">1</span></span></div>
+    <div id="gameBody"></div>
+  </div>
+  <div class="ad-slot"><strong>Advertisement space</strong>Ad network integration required before live ads can run.</div>
+</section>
+<div class="footer">Mystery Mind Hindi • Demo build • Progress stored locally on this device</div>
+</div>
+<div id="toast" class="toast hidden"></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const initial={coins:50,solved:0,level:1,playerName:"Guest Detective",lang:"en",lastDaily:"",guest:true};
+let state={...initial,...safeParse(localStorage.getItem("mmh_state"))};
+let currentMode="";
+function safeParse(s){try{return s?JSON.parse(s):{}}catch{return {}}}
+function save(){localStorage.setItem("mmh_state",JSON.stringify(state));renderStats()}
+function renderStats(){$("coinCount").textContent=state.coins;$("gameCoins").textContent=state.coins;$("solvedCount").textContent=state.solved;$("levelCount").textContent=state.level;$("gameLevel").textContent=state.level;$("playerName").textContent=state.playerName;$("languageBtn").textContent="🌐 Language: "+(state.lang==="en"?"English":"हिन्दी")}
+function toast(s){$("toast").textContent=s;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2200)}
+function t(en,hi){return state.lang==="en"?en:hi}
+function home(){ $("home").classList.remove("hidden");$("game").classList.add("hidden");currentMode=""}
+function openGame(mode){currentMode=mode;$("home").classList.add("hidden");$("game").classList.remove("hidden");const names={hidden:t("Hidden Objects","छिपी चीज़ें"),pattern:t("Pattern Match","पैटर्न मैच"),math:t("Math Mystery","गणित रहस्य"),case:t("Mini Case","छोटा केस"),memory:t("Memory Test","मेमोरी टेस्ट"),daily:t("Daily Reward","डेली रिवॉर्ड")};$("gameTitle").textContent=names[mode];buildMode(mode);renderStats()}
+function win(reward=15,msg){
+ const completedLevel=state.level;
+ state.coins+=reward;
+ state.solved++;
+ state.level++;
+ save();
+ if(typeof renderStats==="function")renderStats();
+ const overlay=document.getElementById("levelRewardOverlay");
+ document.getElementById("rewardKicker").textContent=t("LEVEL COMPLETE","लेवल पूरा");
+ document.getElementById("rewardTitle").textContent=t("🎉 Level Complete!","🎉 लेवल पूरा!");
+ document.getElementById("rewardSubtitle").textContent=msg||t("Great work, detective!","शानदार काम, डिटेक्टिव!");
+ document.getElementById("rewardOldLevel").textContent=completedLevel;
+ document.getElementById("rewardNewLevel").textContent=state.level;
+ document.getElementById("rewardCoinAmount").textContent="+"+reward;
+ document.getElementById("rewardCoinLabel").textContent=t("Reward added to your wallet!","रिवॉर्ड आपके वॉलेट में जुड़ गया!");
+ overlay.classList.add("show");
+}
+function buildMode(mode){const b=$("gameBody");b.innerHTML="";
+if(mode==="hidden"){const items=["🗝️","🪙","🔍","🍎","🧿","🕯️","📜","💎","🧸","🪶","🧪","🪬","🧭","🪷","🪞","🧵","🪄","🪙","🎭","🧩"];const targetCount=Math.min(3+Math.floor((state.level-1)/4),8);const pool=[...new Set(items)];const targets=[...pool].sort(()=>Math.random()-.5).slice(0,targetCount);const boardSize=Math.min(Math.max(9,targetCount+6+Math.floor(state.level/2)),20);const shuffled=[...pool].sort(()=>Math.random()-.5).slice(0,boardSize);targets.forEach(x=>{if(!shuffled.includes(x))shuffled[Math.floor(Math.random()*shuffled.length)]=x});b.innerHTML=`<p class="notice">${t("Find all target objects:","सभी निशाने वाली चीज़ें ढूँढो:")} <b style="color:var(--gold)">${targets.join(" ")}</b></p><p class="notice">${t("Targets","लक्ष्य")}: ${targetCount} · ${t("Board","बोर्ड")}: ${shuffled.length} ${t("objects","चीज़ें")}</p><div class="object-grid" id="objects"></div><p class="notice" id="foundText">0 / ${targetCount} found</p>`;let found=[];shuffled.sort(()=>Math.random()-.5).forEach((it)=>{const btn=document.createElement("button");btn.className="obj";btn.textContent=it;btn.onclick=()=>{if(btn.classList.contains("found"))return;if(targets.includes(it)){btn.classList.add("found");found.push(it);btn.textContent="✓";$("foundText").textContent=found.length+" / "+targetCount+" "+t("found","मिल गईं");if(found.length===targetCount)win(15+Math.floor(state.level/2),t("All target objects found.","सभी चीज़ें मिल गईं।"))}else{btn.classList.add("wrong");state.coins=Math.max(0,state.coins-1);save();toast(t("Not that one! -1 coin","ये नहीं! -1 कॉइन"))}};$("objects").appendChild(btn)})}
+else if(mode==="pattern"){
+const symbols=["🔴","🔵","🟢","🟡","🟣","🟠"];const period=Math.min(2+Math.floor((state.level-1)/3),symbols.length);const seq=symbols.slice(0,period);const answer=seq[(state.level+2)%period];const shown=Array.from({length:Math.min(5+Math.floor(state.level/2),10)},(_,i)=>seq[i%period]);const next=seq[shown.length%period];b.innerHTML=`<p>${t("Level-scaled pattern: choose the next symbol.","लेवल के हिसाब से पैटर्न: अगला चिन्ह चुनो।")}</p><h1 style="text-align:center;letter-spacing:5px;line-height:1.8">${shown.join(" ")} ❔</h1><p class="notice">${t("Difficulty","कठिनाई")}: ${state.level}</p><div class="grid" id="answers"></div>`;const choices=[next,...symbols.filter(x=>x!==next).sort(()=>Math.random()-.5).slice(0,3)].sort(()=>Math.random()-.5);choices.forEach(x=>{const q=document.createElement("button");q.className="mode";q.textContent=x;q.onclick=()=>x===next?win(10+Math.floor(state.level/2),t("Pattern solved. Next level will be harder.","पैटर्न सही! अगला लेवल और कठिन होगा।")):toast(t("Try again!","फिर कोशिश करो!"));$("answers").appendChild(q)})}
+else if(mode==="math"){const max=10+state.level*3;const answer=1+Math.floor(Math.random()*max);const mult=2+Math.min( Math.floor((state.level-1)/5),8);const add=Math.floor(Math.random()*(5+state.level));const total=answer*mult+add;b.innerHTML=`<p>${t("Solve the equation:","समीकरण हल करो:")} <b>${mult} × x + ${add} = ${total}</b></p><p class="notice">${t("Difficulty increases with every level.","हर लेवल के साथ कठिनाई बढ़ती है।")}</p><input class="input" id="mathAnswer" inputmode="numeric" placeholder="${t("Enter x","x लिखें")}"><button id="mathSubmit">${t("Submit answer","जवाब दें")}</button>`;$("mathSubmit").onclick=()=>Number($("mathAnswer").value)===answer?win(12+Math.floor(state.level/2),t("Equation solved!","समीकरण हल हो गया!")):toast(t("Not quite. Try again!","सही नहीं, फिर कोशिश करो!"))}
+else if(mode==="case"){b.innerHTML=`<p><b>${t("The Missing Key","गुम हुई चाबी")}</b></p><p class="notice">${t("The study was locked. A wet footprint was found near the window. The gardener was watering plants outside, and the window was open. Which clue matters most?","कमरा बंद था। खिड़की के पास गीले पैरों का निशान मिला। माली बाहर पौधों में पानी दे रहा था और खिड़की खुली थी। सबसे अहम सुराग क्या है?")}</p><div class="grid" id="caseAnswers"></div>`;[[t("Wet footprint","गीला निशान"),true],[t("A blue curtain","नीला पर्दा"),false],[t("A clock","घड़ी"),false]].forEach(([x,ok])=>{const q=document.createElement("button");q.className="mode";q.textContent=x;q.onclick=()=>ok?win(15,t("It connects the open window to the outside.","यह खुली खिड़की और बाहर के बीच संबंध दिखाता है।")):toast(t("Look for the clue connected to entry.","आने-जाने से जुड़ा सुराग देखो।"));$("caseAnswers").appendChild(q)})}
+else if(mode==="memory"){const icons=["🌙","⭐","🍀","🔔"];const target=icons[Math.floor(Math.random()*icons.length)];b.innerHTML=`<p>${t("Remember this symbol for 2 seconds:","इस चिन्ह को 2 सेकंड याद रखो:")}</p><h1 id="memorySymbol" style="text-align:center;font-size:4rem">${target}</h1><div class="grid" id="memoryAnswers"></div>`;setTimeout(()=>{if(!$("memorySymbol"))return;$("memorySymbol").textContent="❔";icons.sort(()=>Math.random()-.5).forEach(x=>{const q=document.createElement("button");q.className="mode";q.textContent=x;q.onclick=()=>x===target?win(10,t("Memory sharp!","याददाश्त शानदार!")):toast(t("Not this symbol!","ये चिन्ह नहीं!"));$("memoryAnswers").appendChild(q)})},2000)}
+else if(mode==="daily"){const today=new Date().toISOString().slice(0,10);if(state.lastDaily===today){b.innerHTML=`<p class="notice">${t("You already claimed today's reward. Come back tomorrow!","आज का रिवॉर्ड ले चुके हो। कल फिर आना!")}</p>`}else{b.innerHTML=`<h1 style="text-align:center">🎁 +25 🪙</h1><p class="notice">${t("Claim your daily coins.","अपने डेली कॉइन्स लो।")}</p><button id="claimBtn">${t("Claim reward","रिवॉर्ड लें")}</button>`;$("claimBtn").onclick=()=>{state.coins+=25;state.lastDaily=today;save();toast(t("25 coins added!","25 कॉइन्स मिल गए!"));buildMode("daily")}}}
+}
+$("guestBtn").onclick=()=>{state.guest=true;save();toast(t("Welcome, detective!","स्वागत है, डिटेक्टिव!"))};
+$("languageBtn").onclick=()=>{state.lang=state.lang==="en"?"hi":"en";save();toast(t("Language changed to English","भाषा हिन्दी में बदल गई"));$("home").classList.remove("hidden");if(!$("game").classList.contains("hidden"))openGame(currentMode)};
+document.querySelectorAll("[data-mode]").forEach(x=>x.onclick=()=>openGame(x.dataset.mode));
+$("backBtn").onclick=home;
+$("nameBtn").onclick=()=>{const n=prompt(t("Enter your nickname:","अपना निकनेम लिखें:"),state.playerName);if(n&&n.trim()){state.playerName=n.trim().slice(0,24);save();toast(t("Nickname saved","निकनेम सेव हो गया"))}};
+$("resetBtn").onclick=()=>{if(confirm(t("Delete all local game progress on this device?","इस डिवाइस से पूरा गेम प्रोग्रेस मिटाएँ?"))){state={...initial};save();toast(t("Local progress reset","प्रोग्रेस रीसेट हो गया"))}};
+renderStats();
+})();
+
+document.getElementById("rewardContinue")?.addEventListener("click",()=>{
+ document.getElementById("levelRewardOverlay").classList.remove("show");
+ if(typeof showScreen==="function")showScreen("screen-home");
+ else if(typeof renderHome==="function")renderHome();
+});
+document.getElementById("rewardHome")?.addEventListener("click",()=>{
+ document.getElementById("levelRewardOverlay").classList.remove("show");
+ if(typeof showScreen==="function")showScreen("screen-home");
+ else if(typeof renderHome==="function")renderHome();
+});
+
+</script>
+
+<div id="levelRewardOverlay" role="dialog" aria-modal="true">
+ <section id="levelRewardSheet">
+  <div class="rk" id="rewardKicker">LEVEL COMPLETE</div>
+  <div class="rt" id="rewardTitle">🎉 Level Complete!</div>
+  <p class="rs" id="rewardSubtitle">Great work, detective!</p>
+  <div class="rl"><div style="text-align:center"><span>COMPLETED</span><br><strong id="rewardOldLevel">1</strong></div><div style="font-size:25px;color:#ffd166">➜</div><div style="text-align:center"><span>NEXT LEVEL</span><br><strong id="rewardNewLevel">2</strong></div></div>
+  <div class="rc">🪙 <span id="rewardCoinAmount">+15</span></div>
+  <p class="rs" id="rewardCoinLabel">Reward added to your wallet!</p>
+  <div class="ra"><button id="rewardContinue">🚀 Continue to Next Level</button><button id="rewardHome">🏠 Back to Menu</button></div>
+ </section>
+</div>
+
+<script>
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(err => console.warn("Offline cache setup failed", err)));
+}
+</script>
+</body>
+</html>
