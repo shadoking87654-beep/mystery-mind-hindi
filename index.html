@@ -208,12 +208,118 @@ document.querySelectorAll("[data-mode]").forEach(btn=>btn.onclick=()=>openGame(b
 $("backBtn").onclick=()=>show("home");
 $("shopBtn").onclick=()=>{show("shop");$("shopBalance").textContent="🪙 "+state.coins+" coins"};
 $("shopBack").onclick=()=>show("home");
-$("buyHint").onclick=()=>{if(state.coins<15){toast(tr("need"));return}state.coins-=15;state.hints++;save();$("shopBalance").textContent="🪙 "+state.coins+" coins";toast("Hint purchased!")};
-$("hintBtn").onclick=()=>{if(state.coins<5){toast(tr("need"));return}if(!hintText){toast("No hint available.");return}state.coins-=5;save();toast(tr("hintMsg")+": "+hintText)};
-$("skipBtn").onclick=()=>{if(state.coins<10){toast(tr("need"));return}state.coins-=10;save();toast(tr("skipped"));setTimeout(()=>openGame(currentMode),400)};
+$("buyHint").onclick=()=>{if(state.coins<50){toast(tr("need"));return}state.coins-=50;state.hints++;save();$("shopBalance").textContent="🪙 "+state.coins+" coins";toast("Hint purchased!")};
+$("hintBtn").onclick=()=>{if(state.coins<50){toast("50 coins chahiye");return}if(!hintText){toast("No hint available.");return}state.coins-=50;save();toast(tr("hintMsg")+": "+hintText)};
+$("skipBtn").onclick=()=>{if(state.coins<40){toast("40 coins chahiye");return}state.coins-=40;save();toast("Level skipped — no reward.");setTimeout(()=>openGame(currentMode),400)};
 $("resetBtn").onclick=()=>{if(confirm("Reset your game progress?")){state={...initial,lang:state.lang};save();applyLanguage();toast("Progress reset.")}};
 applyLanguage();renderStats();
 })();
+// CROWN HUB FUNCTIONS
+const crowns = [
+  {name:"Beginner",icon:"🥉",cost:0},
+  {name:"Rookie",icon:"🥈",cost:100},
+  {name:"Bronze",icon:"🥉",cost:200},
+  {name:"Silver",icon:"🥈",cost:300},
+  {name:"Gold",icon:"🥇",cost:500},
+  {name:"Platinum",icon:"💎",cost:700},
+  {name:"Diamond",icon:"💠",cost:1000},
+  {name:"Master",icon:"👑",cost:1500},
+  {name:"Grandmaster",icon:"🔥",cost:2000},
+  {name:"Legend",icon:"🏆",cost:3000}
+];
+window.showCrownProfile = function(){
+  const panel=document.getElementById("crownPanel");
+  panel.innerHTML="<h3>👤 Profile</h3>"+
+    "<p>Level: "+state.level+"</p>"+
+    "<p>Coins: 🪙 "+state.coins+"</p>"+
+    "<p>Rank: "+(crowns[Math.min(9,Math.floor((state.level-1)/5))].icon)+" "+
+    crowns[Math.min(9,Math.floor((state.level-1)/5))].name+"</p>";
+};
+window.showCrownShop = function(){
+  const panel=document.getElementById("crownPanel");
+  panel.innerHTML="<h3>👑 Crown Shop</h3>";
+  crowns.forEach(function(c){
+    const btn=document.createElement("button");
+    btn.className="secondary";
+    btn.textContent=c.icon+" "+c.name+" — "+c.cost+" coins";
+    btn.onclick=function(){
+      if(c.cost===0){panel.innerHTML="<p>🥉 Beginner Crown equipped!</p>";return;}
+      if(state.coins<c.cost){toast("Coins kam hain!");return;}
+      state.coins-=c.cost;
+      save();
+      renderStats();
+      panel.innerHTML="<p>"+c.icon+" "+c.name+" Crown purchased!</p>";
+    };
+    panel.appendChild(btn);
+  });
+};
+window.showCrownLeaderboard = function(){
+  document.getElementById("crownPanel").innerHTML=
+    "<h3>🏆 Leaderboard</h3>"+
+    "<p>Level: "+state.level+"</p>"+
+    "<p>Coins: "+state.coins+"</p>"+
+    "<p>Solved puzzles: "+state.solved+"</p>"+
+    "<p>Note: Ye abhi local leaderboard hai; online players ka data nahi.</p>";
+};
+window.equippedCrown = window.equippedCrown || "Beginner";
+
+window.showCrownProfile = function () {
+  const panel = document.getElementById("crownPanel");
+  const rankIndex = Math.min(
+    9,
+    Math.max(0, Math.floor((state.level - 1) / 5))
+  );
+  const rank = crowns[rankIndex];
+  panel.innerHTML =
+    "<h3>👤 Profile</h3>" +
+    "<p>Level: " + state.level + "</p>" +
+    "<p>Coins: 🪙 " + state.coins + "</p>" +
+    "<p>Rank: " + rank.icon + " " + rank.name + "</p>" +
+    "<p>Equipped Crown: 👑 " + window.equippedCrown + "</p>";
+};
+window.showCrownShop = function () {
+  const panel = document.getElementById("crownPanel");
+  panel.innerHTML = "<h3>👑 Crown Shop</h3>";
+  crowns.forEach(function (c) {
+    const btn = document.createElement("button");
+    btn.className = "secondary";
+    btn.textContent = c.icon + " " + c.name + " — " + c.cost + " coins";
+    btn.onclick = function () {
+      if (c.name === "Beginner") {
+        window.equippedCrown = c.name;
+        panel.innerHTML = "<p>✅ Beginner Crown equipped!</p>";
+        document.getElementById("crownCurrent").textContent =
+          c.icon + " " + c.name + " Crown";
+        return;
+      }
+      if (state.coins < c.cost) {
+        toast("Coins kam hain!");
+        return;
+      }
+      state.coins -= c.cost;
+      window.equippedCrown = c.name;
+      save();
+      renderStats();
+      document.getElementById("crownCurrent").textContent =
+        c.icon + " " + c.name + " Crown";
+
+      panel.innerHTML =
+        "<p>✅ " + c.name + " Crown purchased and equipped!</p>";
+    };
+    panel.appendChild(btn);
+  });
+};
 </script>
+<!-- CROWN HUB -->
+<div class="card" id="crownHub">
+  <h3>👑 Crown Hub</h3>
+  <p id="crownCurrent">🥉 Beginner Crown</p>
+  <div class="grid">
+    <button class="secondary" onclick="showCrownProfile()">👤 Profile</button>
+    <button class="secondary" onclick="showCrownShop()">👑 Crown Shop</button>
+    <button class="secondary" onclick="showCrownLeaderboard()">🏆 Leaderboard</button>
+  </div>
+  <div id="crownPanel" class="notice"></div>
+</div>
 </body>
 </html>
