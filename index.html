@@ -41,7 +41,6 @@ select{background:#303960;color:white;max-width:100%}
   <div class="brand">🧠 MYSTERY <span style="color:#ffd166">MIND</span></div>
   <div class="coins">🪙 <span id="coinCount">50</span></div>
 </header>
-
 <section id="home">
   <div class="card hero">
     <div>🔎 THINK • OBSERVE • SOLVE</div>
@@ -64,8 +63,7 @@ select{background:#303960;color:white;max-width:100%}
       <button id="playBtn">🎮 Play Game</button>
     </div>
   </div>
-
-  <div class="card">
+   <div class="card">
     <h3 id="chooseTitle">🕹️ Choose a Mystery</h3>
     <div class="grid">
       <button class="mode" data-mode="hidden">🔎 <span data-key="hidden">Hidden Objects</span><small>Find the secret symbols</small></button>
@@ -75,8 +73,7 @@ select{background:#303960;color:white;max-width:100%}
       <button class="mode" data-mode="case">🕵️ <span data-key="case">Mini Case</span><small>Choose the correct clue</small></button>
       <button class="mode" data-mode="daily">🎁 <span data-key="daily">Daily Reward</span><small>Claim your daily coins</small></button>
     </div>
-  </div>
-
+   </div>
   <div class="card">
     <h3 id="progressTitle">📊 Your Progress</h3>
     <div class="stats">
@@ -89,7 +86,6 @@ select{background:#303960;color:white;max-width:100%}
     </div>
   </div>
 </section>
-
 <section id="game" class="hidden">
   <div class="row">
     <button class="secondary" id="backBtn">← Back</button>
@@ -107,7 +103,6 @@ select{background:#303960;color:white;max-width:100%}
     </div>
   </div>
 </section>
-
 <section id="shop" class="hidden">
   <div class="row"><button class="secondary" id="shopBack">← Back</button><h2 id="shopTitle">🛒 Coin Shop</h2></div>
   <div class="card">
@@ -119,7 +114,6 @@ select{background:#303960;color:white;max-width:100%}
 <div class="footer">Mystery Mind • Game progress saved on this device</div>
 </div>
 <div id="toast" class="hidden"></div>
-
 <script>
 (function(){
 const $=id=>document.getElementById(id);
@@ -128,7 +122,6 @@ let state;
 try{state={...initial,...JSON.parse(localStorage.getItem("mmh_state")||"{}")}}
 catch(e){state={...initial}}
 let currentMode="",answer=null,hintText="",locked=false;
-
 const words={
 en:{welcome:"Ready to crack the mystery?",intro:"Solve puzzles, earn coins and unlock new levels!",play:"🎮 Play Game",choose:"🕹️ Choose a Mystery",progress:"📊 Your Progress",solved:"Solved",level:"Level",hidden:"Hidden Objects",pattern:"Pattern Match",math:"Math Mystery",memory:"Memory Test",case:"Mini Case",daily:"Daily Reward",back:"← Back",hint:"💡 Hint (5)",skip:"⏭️ Skip (10)",shop:"🛒 Coin Shop",buy:"💡 Buy a Hint — 15 coins",reset:"Reset Progress",wrong:"Try again!",need:"Not enough coins!",win:"Correct! You earned 15 coins!",hintMsg:"Hint",skipped:"Puzzle skipped.",claimed:"Daily coins claimed!",already:"You already claimed today's reward.",shopNote:"Hints can help you solve puzzles."},
 hi:{welcome:"रहस्य सुलझाने के लिए तैयार?",intro:"पहेलियाँ सुलझाओ, कॉइन कमाओ और नए लेवल खोलो!",play:"🎮 गेम खेलें",choose:"🕹️ रहस्य चुनें",progress:"📊 आपकी प्रगति",solved:"हल किए",level:"लेवल",hidden:"छिपी चीज़ें",pattern:"पैटर्न मैच",math:"गणित रहस्य",memory:"याददाश्त टेस्ट",case:"छोटा केस",daily:"डेली रिवॉर्ड",back:"← वापस",hint:"💡 संकेत (5)",skip:"⏭️ छोड़ें (10)",shop:"🛒 कॉइन दुकान",buy:"💡 संकेत खरीदें — 15 कॉइन",reset:"प्रगति रीसेट",wrong:"फिर कोशिश करो!",need:"कॉइन कम हैं!",win:"सही! 15 कॉइन मिले!",hintMsg:"संकेत",skipped:"पहेली छोड़ दी गई।",claimed:"डेली कॉइन मिल गए!",already:"आज का रिवॉर्ड पहले ही ले चुके हो।",shopNote:"संकेत पहेली सुलझाने में मदद करते हैं।"},
