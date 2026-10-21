@@ -131,10 +131,10 @@ document.getElementById("rewardContinue")?.addEventListener("click",()=>{
   window.continueToNextLevel?.();
 });
 document.getElementById("rewardHome")?.addEventListener("click",()=>{
- document.getElementById("levelRewardOverlay").classList.remove("show");
- if(typeof showScreen==="function")showScreen("screen-home");
- else if(typeof renderHome==="function")renderHome();
-})
+  document.getElementById("levelRewardOverlay").classList.remove("show");
+  document.getElementById("home").classList.remove("hidden");
+  document.getElementById("game").classList.add("hidden");
+});
 
 </script>
 
