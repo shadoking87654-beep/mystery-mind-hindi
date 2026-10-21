@@ -159,7 +159,7 @@ $("shopBack").textContent=tr("back");$("buyHint").textContent=tr("buy");
 $("resetBtn").textContent=tr("reset");$("shopNote").textContent=tr("shopNote");
 document.querySelectorAll("[data-key]").forEach(el=>el.textContent=tr(el.dataset.key));
 $("languageSelect").value=state.lang;
-}
+ }
 function show(section){
 ["home","game","shop"].forEach(id=>$(id).classList.toggle("hidden",id!==section));
 }
