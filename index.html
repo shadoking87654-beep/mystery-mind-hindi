@@ -150,7 +150,8 @@ document.getElementById("rewardHome")?.addEventListener("click",()=>{
   document.getElementById("levelRewardOverlay").classList.remove("show");
   document.getElementById("home").classList.remove("hidden");
   document.getElementById("game").classList.add("hidden");
-});if ("serviceWorker"in navigator && location.protocol.startsWith("http")) {
+});
+  if ("serviceWorker"in navigator && location.protocol.startsWith("http")) {
   window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(err => console.warn("Offline cache setup failed", err)));
 }
 </script>
