@@ -122,18 +122,19 @@ $("backBtn").onclick=home;
 $("nameBtn").onclick=()=>{const n=prompt(t("Enter your nickname:","अपना निकनेम लिखें:"),state.playerName);if(n&&n.trim()){state.playerName=n.trim().slice(0,24);save();toast(t("Nickname saved","निकनेम सेव हो गया"))}};
 $("resetBtn").onclick=()=>{if(confirm(t("Delete all local game progress on this device?","इस डिवाइस से पूरा गेम प्रोग्रेस मिटाएँ?"))){state={...initial};save();toast(t("Local progress reset","प्रोग्रेस रीसेट हो गया"))}};
 renderStats();
+window.continueToNextLevel = () => {
+  document.getElementById("levelRewardOverlay").classList.remove("show");
+  if (currentMode) openGame(currentMode);
+};
 })();
-
 document.getElementById("rewardContinue")?.addEventListener("click",()=>{
- document.getElementById("levelRewardOverlay").classList.remove("show");
- if(typeof showScreen==="function")showScreen("screen-home");
- else if(typeof renderHome==="function")renderHome();
+  window.continueToNextLevel?.();
 });
 document.getElementById("rewardHome")?.addEventListener("click",()=>{
  document.getElementById("levelRewardOverlay").classList.remove("show");
  if(typeof showScreen==="function")showScreen("screen-home");
  else if(typeof renderHome==="function")renderHome();
-});
+})
 
 </script>
 
